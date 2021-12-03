@@ -21,6 +21,8 @@ class Fxdiv(CMakePackage):
     depends_on('ninja', type='build')
     depends_on('python', type='build')
 
+    patch('fix-numeric_limits.patch', when='@2020-04-17')
+
     generator = 'Ninja'
 
     resource(
