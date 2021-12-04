@@ -3,6 +3,7 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 import datetime as dt
+import os
 
 from spack import *
 
@@ -180,6 +181,8 @@ class Lammps(CMakePackage, CudaPackage):
                 'ON' if '+mpi' in spec else 'OFF'),
             self.define_from_variant('BUILD_OMP', 'openmp'),
         ]
+        if spec.satisfies('+mpi'):
+            args.append('-DCMAKE_CXX_COMPILER={}'.format(os.environ['MPICXX']))
         if spec.satisfies('+cuda'):
             args.append('-DPKG_GPU=ON')
             args.append('-DGPU_API=cuda')
